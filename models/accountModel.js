@@ -8,7 +8,7 @@ function createAccount() {
 
 // TODO (Will)
 function authenticate() {
-
+    
 }
 
 module.exports = {createAccount, authenticate}
