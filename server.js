@@ -45,7 +45,7 @@ app.get("/edit", function(req, res) {
 // So the frontend can render the list of tasks associated with a specific user
 // req.query contains the username
 app.get("/entries", function(req, res) {
-    crudModel.getEntries(req.query);
+    return res.json(crudModel.getEntries(req.query));
 });
 
 // Adds the item in req.body to the database
@@ -53,9 +53,10 @@ app.post("/addItem", function(req, res) {
     crudModel.addItem(req.body);
 });
 
-// Removes the item specified in req.query from the database
+// req.query has an id attribute that is the task_id of the item being removed
+// Removes this item in the database
 app.get("/removeItem", function(req, res) {
-    crudModel.removeItem(req.query);
+    crudModel.removeItem(req.query.id);
 });
 
 // Updates the item specified in req.body in the database
