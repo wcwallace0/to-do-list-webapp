@@ -1,3 +1,22 @@
-//- Pug layout for the login page
-//- There will be a field for username and password, and a sign in button
-//- A Create Account button at the bottom to go to the create account page
+doctype html
+html
+  head
+    title Login Page
+    link(rel="stylesheet", href="styles.css")
+  body
+    main
+      h1 Login to Your Account
+      form#login-form
+        div
+          label(for="username") Username:
+          input(type="text", id="username", name="username", required)
+        div
+          label(for="password") Password:
+          input(type="password", id="password", name="password", required)
+        div
+          button(type="submit") Sign In
+      div(class="create-account-container")
+        p Don't have an account?
+        button(type="button", onclick="location.href='/account'") Create Account
+
+  script(src="/login.js")

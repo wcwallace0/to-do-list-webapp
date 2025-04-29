@@ -1,5 +1,31 @@
-//- the Pug layout for the edit page
-//- pretty much the same as the add page, 
-//- but the fields are filled in with the attributes of the task that is being edited
-//- an object called task will be passed into this pug layout with the following attributes
-//- name, description, priority, deadline, status
+doctype html
+html
+  head
+    title Edit Task
+    link(rel="stylesheet", href="styles.css")
+  body
+    main
+      h1 Edit Task
+      form(action="/crud/editItem", method="POST")
+        div
+          label(for="title") Title:
+          input(type="text", id="title", name="title", value=task.title, required)
+        div
+          label(for="description") Description:
+          textarea(id="description", name="description", required) #{task.description}
+        div
+          label(for="priority") Priority:
+          input(type="number", id="priority", name="priority", value=task.priority, required)
+        div
+          label(for="deadline") Deadline:
+          input(type="date", id="deadline", name="deadline", value=task.deadline, required)
+        div
+          label(for="status") Status:
+          select(id="status", name="status", required)
+            option(value="Pending", selected=task.status === "Pending") Pending
+            option(value="In Progress", selected=task.status === "In Progress") In Progress
+            option(value="Completed", selected=task.status === "Completed") Completed
+        div 
+          input(type="hidden", id="task_id", name="task_id", value=task.task_id)
+        div
+          button(type="submit") Save Changes
