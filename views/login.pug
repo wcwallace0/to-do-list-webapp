@@ -6,7 +6,7 @@ html
   body
     main
       h1 Login to Your Account
-      form(action="/login", method="POST")
+      form#login-form
         div
           label(for="username") Username:
           input(type="text", id="username", name="username", required)
@@ -17,4 +17,6 @@ html
           button(type="submit") Sign In
       div(class="create-account-container")
         p Don't have an account?
-        button(type="button", onclick="location.href='/create-account'") Create Account
+        button(type="button", onclick="location.href='/account'") Create Account
+
+  script(src="/login.js")

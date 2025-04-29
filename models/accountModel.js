@@ -35,18 +35,18 @@ async function authenticate(formData) {
     let sql = "SELECT password FROM Usr WHERE user_name = $1";
     let result = await db.query(sql, [formData.username]);
     // check if username and password match the database
-    // if so, issue a token
-    if(bcrypt.compareSync(formData.password, result.rows[0].password)) {
-        const token = jwt.encode({ username: formData.username }, secret);
-        return { token: token };
+    if(result.rows[0]) {
+        // if so, issue a token
+        if(bcrypt.compareSync(formData.password, result.rows[0].password)) {
+            const token = jwt.encode({ username: formData.username }, secret);
+            return { token: token };
+        } else {
+            return { err: "Password did not match" };
+        }
     } else {
-        return { err: "Password did not match" };
+        // no user found
+        return { err: "User with that username was not found" };
     }
 }
-
-// to get the user's token (with username)
-// const token = req.headers["x-auth"];
-// const decoded = jwt.decode(token, secret);
-// decoded.username
 
 module.exports = {createAccount, authenticate}

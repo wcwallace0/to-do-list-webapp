@@ -1,5 +1,11 @@
 const router = require("express").Router();
 const crudModel = require('../models/crudModel.js');
+const jwt = require("jwt-simple");
+const cors = require("cors");
+
+router.use(cors());
+
+const secret = "secret";
 
 // Renders the add page
 router.get("/add", function(req, res) {
@@ -16,8 +22,11 @@ router.get("/edit", function(req, res) {
 // Returns a list of task objects from the database
 // So the frontend can render the list of tasks associated with a specific user
 // req.query contains the username
-router.get("/entries", function(req, res) {
-    return res.json(crudModel.getEntries(req.query.username));
+router.get("/entries", async function(req, res) {
+    // to get the user's token (with username)
+    console.log(req.query.username);
+    const decoded = jwt.decode(req.query.username, secret);
+    return res.json(await crudModel.getEntries(decoded.username));
 });
 
 // Adds the item in req.body to the database

@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const accountModel = require('../models/accountModel.js');
+const cors = require("cors");
+
+router.use(cors());
 
 // Renders the create account page
 router.get("/", function(req, res) {

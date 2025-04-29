@@ -18,9 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Fetch and render tasks
-    fetch(`/entries?username=${encodeURIComponent(username)}`)
-        .then(response => response.json())
+    fetch(`/crud/entries?username=${encodeURIComponent(username)}`)
+        .then(response => {
+            console.log(response);
+            return response.json();
+        })
         .then(tasks => {
+            console.log(tasks);
             tasks.forEach(task => {
                 const taskElement = createTaskElement(task);
                 taskList.appendChild(taskElement);

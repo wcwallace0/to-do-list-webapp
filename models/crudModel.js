@@ -11,17 +11,11 @@ const db = require("../db_connection.js").db_connection;
     status:
     user_name:
 } */
-function getEntries(username) {
+async function getEntries(username) {
     let sql = "SELECT * FROM Task WHERE user_name = $1";
-    db.query(sql, [username])
-        .then(result => {
-            console.log(result.rows);
-            return result.rows;
-        })
-        .catch(err => {
-            console.log(err);
-            return err;
-        });
+    let result = await db.query(sql, [username]);
+    console.log(result.rows);
+    return result.rows;
 }
 
 // Takes in formData with the following structure, adds the item to the database
