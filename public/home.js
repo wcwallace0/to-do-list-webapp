@@ -9,6 +9,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const taskList = document.getElementById('task-list');
     const addButton = document.getElementById('add-button');
+    const logoutButton = document.getElementById("logout-button");
     const username = localStorage.getItem('username'); // Assume username stored during login
 
     if (!username) {
@@ -39,6 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
     addButton.addEventListener('click', function() {
         window.location.href = '/crud/add';
     });
+
+    // Logout button
+    logoutButton.addEventListener("click", function() {
+        localStorage.removeItem("username");
+        window.location.href = "/";
+    })
 
     // Helper to create task DOM element
     function createTaskElement(task) {
