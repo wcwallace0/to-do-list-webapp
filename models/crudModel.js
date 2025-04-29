@@ -14,7 +14,7 @@ const db = require("../db_connection.js").db_connection;
 async function getEntries(username) {
     let sql = "SELECT * FROM Task WHERE user_name = $1";
     let result = await db.query(sql, [username]);
-    console.log(result.rows);
+    console.log("getEntries result ", result.rows);
     return result.rows;
 }
 
@@ -30,7 +30,7 @@ async function getEntries(username) {
 async function addItem(formData) {
     let sql = 'INSERT INTO Task (title, description, priority, deadline, status, user_name) VALUES ($1, $2, $3, $4, $5, $6)';
     let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.username]);
-    console.log(result);
+    console.log("Add item result ", result);
     return true;
 }
 
@@ -38,7 +38,7 @@ async function addItem(formData) {
 async function removeItem(task_id) {
     let sql = 'DELETE FROM Task WHERE task_id = $1';
     let result = await db.query(sql, [task_id]);
-    console.log(result);
+    console.log("Remove item result ", result);
     return true;
 }
 
@@ -55,8 +55,8 @@ async function removeItem(task_id) {
 } */
 async function editItem(formData) {
     let sql = 'UPDATE Task SET title = $1, description = $2, priority = $3, deadline = $4, status = $5 WHERE task_id = $6';
-    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.id]);
-    console.log(result);
+    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.task_id]);
+    console.log("Edit item result ", result);
     return true;
 }
 

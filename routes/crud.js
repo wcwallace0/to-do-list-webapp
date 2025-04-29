@@ -14,7 +14,7 @@ router.get("/add", function(req, res) {
 
 // Renders the edit page
 router.get("/edit", function(req, res) {
-    res.render("edit");
+    res.render("edit", { task: req.query });
 });
 
 // Returns a list of task objects from the database
@@ -22,7 +22,6 @@ router.get("/edit", function(req, res) {
 // req.query contains the username
 router.get("/entries", async function(req, res) {
     // to get the user's token (with username)
-    console.log(req.query.username);
     const decoded = jwt.decode(req.query.username, secret);
     return res.json(await crudModel.getEntries(decoded.username));
 });
@@ -50,8 +49,9 @@ router.get("/removeItem", async function(req, res) {
 
 // Updates the item specified in req.body in the database
 router.post("/editItem", async function(req, res) {
-    // return res.json(crudModel.editItem({ title: "task2 new", description: "desc3", priority: "7", deadline: "2/2/2005", status: "in progress", id: 2}));
-    return res.json(await crudModel.editItem(req.body));
+    console.log("object passed to /editItem ", req.body);
+    await crudModel.editItem(req.body);
+    res.redirect("/home");
 });
 
 module.exports = router;

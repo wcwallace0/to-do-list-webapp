@@ -75,10 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Edit button
-        container.querySelector('.edit-button').addEventListener('click', function() {
+        container.querySelector('.edit-button').addEventListener('click', async function() {
             // Option 1: Save task to localStorage, then load in edit.pug
-            localStorage.setItem('taskToEdit', JSON.stringify(task));
-            window.location.href = '/edit';
+            // localStorage.setItem('taskToEdit', JSON.stringify(task));
+            window.location.href = "/crud/edit?" + new URLSearchParams(task);
         });
 
         return container;

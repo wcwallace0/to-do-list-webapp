@@ -6,10 +6,10 @@ html
   body
     main
       h1 Edit Task
-      form(action="/crud/editItem/#{task.id}", method="POST")
+      form(action="/crud/editItem", method="POST")
         div
-          label(for="name") Name:
-          input(type="text", id="name", name="name", value=task.name, required)
+          label(for="title") Title:
+          input(type="text", id="title", name="title", value=task.title, required)
         div
           label(for="description") Description:
           textarea(id="description", name="description", required) #{task.description}
@@ -25,5 +25,7 @@ html
             option(value="Pending", selected=task.status === "Pending") Pending
             option(value="In Progress", selected=task.status === "In Progress") In Progress
             option(value="Completed", selected=task.status === "Completed") Completed
+        div 
+          input(type="hidden", id="task_id", name="task_id", value=task.task_id)
         div
           button(type="submit") Save Changes
