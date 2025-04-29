@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs");
 
 const secret = "secret";
 
-// TODO (Will) test this
-function createAccount(formData) {
+// Takes in an object with a .username field and a .password field (from the create account form)
+async function createAccount(formData) {
     // Create user in database if it doesn't already exist
     if(!formData.username || !formData.password) {
         return false;
@@ -26,25 +26,22 @@ function createAccount(formData) {
         })
 }
 
-// TODO (Will) test this
-function authenticate(formData) {
+// Takes in an object with a .username field and a .password field (from the create account form)
+async function authenticate(formData) {
     if(!formData.username || !formData.password) {
         return { err: "Missing username and/or password" };
     }
 
     let sql = "SELECT password FROM Usr WHERE user_name = $1";
-    db.query(sql, [formData.username])
-        .then(result => {
-            // check if username and password match the database
-            // if so, issue a token
-            if(bcrypt.compareSync(formData.password, result.rows[0].password)) {
-                const token = jwt.encode({ username: username }, secret);
-                return token;
-            }
-        })
-        .catch(err => {
-            return { err: "Database query encountered an error" };
-        })
+    let result = await db.query(sql, [formData.username]);
+    // check if username and password match the database
+    // if so, issue a token
+    if(bcrypt.compareSync(formData.password, result.rows[0].password)) {
+        const token = jwt.encode({ username: formData.username }, secret);
+        return { token: token };
+    } else {
+        return { err: "Password did not match" };
+    }
 }
 
 // to get the user's token (with username)
