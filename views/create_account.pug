@@ -1,3 +1,17 @@
-//- the pug layout for the create account page
-//- an entry for the username and password
-//- create account button
+doctype html
+html
+  head
+    title Create Account
+    link(rel="stylesheet", href="styles.css")
+  body
+    main
+      h1 Create Your Account
+      form(action="/create-account", method="POST")
+        div
+          label(for="username") Username:
+          input(type="text", id="username", name="username", required)
+        div
+          label(for="password") Password:
+          input(type="password", id="password", name="password", required)
+        div
+          button(type="submit") Create Account

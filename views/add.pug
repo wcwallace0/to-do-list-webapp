@@ -1,5 +1,30 @@
-//- The Pug layout for the add page
-//- There will be a form with the following entries
-//- Name, Description, Priority, Deadline, Status (in progress, completed, done)
-//- all are optional except name
-//- a submit button at the bottom
+doctype html
+html
+  head
+    title Add Task
+    link(rel="stylesheet", href="styles.css")
+  body
+    main
+      h1 Add a New Task
+      form(action="/add", method="POST")
+        div
+          label(for="name") Name (required):
+          input(type="text", id="name", name="name", required)
+        div
+          label(for="description") Description:
+          textarea(id="description", name="description")
+        div
+          label(for="priority") Priority:
+          input(type="number", id="priority", name="priority")
+        div
+          label(for="deadline") Deadline:
+          input(type="date", id="deadline", name="deadline")
+        div
+          label(for="status") Status:
+          select(id="status", name="status")
+            option(value="", selected) Select a status
+            option(value="in progress") In Progress
+            option(value="completed") Completed
+            option(value="done") Done
+        div
+          button(type="submit") Submit
