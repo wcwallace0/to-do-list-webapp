@@ -10,9 +10,9 @@ router.get("/", function(req, res) {
 });
 
 // Creates the account in req.body in the databse
-router.post("/createAccount", function(req, res) {
-    // accountModel.createAccount({ username: "user", password: "testpass" });
-    return res.json(accountModel.createAccount(req.body));
+router.post("/createAccount", async function(req, res) {
+    await accountModel.createAccount(req.body);
+    res.redirect("/");
 });
 
 // Checks if the username and password in req.body match in the database, returns true/false
