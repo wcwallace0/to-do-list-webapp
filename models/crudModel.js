@@ -1,5 +1,5 @@
 // Functions used for creating and authenticating accounts
-const db = require("./db_connection.js").db_connection;
+const db = require("../db_connection.js").db_connection;
 
 // TODO (Will) test this
 function getEntries(username) {

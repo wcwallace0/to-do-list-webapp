@@ -13,7 +13,13 @@ app.post("/createAccount", function(req, res) {
 
 // Checks if the username and password in req.body match in the database, returns true/false
 app.post("/authenticate", function(req, res) {
-    return accountModel.authenticate(req.body);
+    token = accountModel.authenticate(req.body);
+    if(token.err) {
+        console.log(token.err);
+
+    } else {
+        return res.json(token);
+    }
 });
 
 module.exports = router;
