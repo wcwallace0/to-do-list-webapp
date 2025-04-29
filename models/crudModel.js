@@ -27,31 +27,19 @@ async function getEntries(username) {
     status:
     user_name:
 } */
-function addItem(formData) {
+async function addItem(formData) {
     let sql = 'INSERT INTO Task (title, description, priority, deadline, status, user_name) VALUES ($1, $2, $3, $4, $5, $6)';
-    db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.username])
-        .then(result => {
-            console.log(result);
-            return true;
-        })
-        .catch(err => {
-            console.log(err);
-            return false;
-        });
+    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.username]);
+    console.log(result);
+    return true;
 }
 
 // Takes in an id and removes the task in the database with that task_id
-function removeItem(task_id) {
+async function removeItem(task_id) {
     let sql = 'DELETE FROM Task WHERE task_id = $1';
-    db.query(sql, [task_id])
-        .then(result => {
-            console.log(result);
-            return true;
-        })
-        .catch(err => {
-            console.log(err);
-            return false;
-        });
+    let result = await db.query(sql, [task_id]);
+    console.log(result);
+    return true;
 }
 
 // Takes formData with the below structure, edits the item with the specified id
@@ -65,17 +53,11 @@ function removeItem(task_id) {
     status:
     id:
 } */
-function editItem(formData) {
+async function editItem(formData) {
     let sql = 'UPDATE Task SET title = $1, description = $2, priority = $3, deadline = $4, status = $5 WHERE task_id = $6';
-    db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.id])
-        .then(result => {
-            console.log(result);
-            return true;
-        })
-        .catch(err => {
-            console.log(err);
-            return false;
-        });
+    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.id]);
+    console.log(result);
+    return true;
 }
 
 module.exports = {getEntries, addItem, removeItem, editItem};

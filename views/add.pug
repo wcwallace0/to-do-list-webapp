@@ -6,10 +6,10 @@ html
   body
     main
       h1 Add a New Task
-      form(action="/add", method="POST")
+      form(action="/crud/addItem", method="POST")
         div
-          label(for="name") Name (required):
-          input(type="text", id="name", name="name", required)
+          label(for="title") Name (required):
+          input(type="text", id="title", name="title", required)
         div
           label(for="description") Description:
           textarea(id="description", name="description")
@@ -26,5 +26,9 @@ html
             option(value="in progress") In Progress
             option(value="completed") Completed
             option(value="done") Done
+        div 
+          input(type="hidden", id="username", name="username")
         div
           button(type="submit") Submit
+
+  script(src="/add.js")

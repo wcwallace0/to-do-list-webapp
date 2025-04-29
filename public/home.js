@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add button
     addButton.addEventListener('click', function() {
-        window.location.href = '/add';
+        window.location.href = '/crud/add';
     });
 
     // Helper to create task DOM element
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         container.className = 'task';
 
         const content = `
-            <h3>${task.name}</h3>
+            <h3>${task.title}</h3>
             <p>Description: ${task.description || 'N/A'}</p>
             <p>Priority: ${task.priority || 'N/A'}</p>
             <p>Deadline: ${task.deadline || 'N/A'}</p>
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove button
         container.querySelector('.remove-button').addEventListener('click', function() {
             if (confirm('Are you sure you want to delete this task?')) {
-                fetch(`/removeItem?task_id=${encodeURIComponent(task.task_id)}`)
+                fetch(`/crud/removeItem?task_id=${encodeURIComponent(task.task_id)}`)
                     .then(response => {
                         if (response.ok) {
                             container.remove(); // remove from page

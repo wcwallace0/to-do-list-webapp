@@ -6,7 +6,7 @@ html
   body
     main
       h1 Edit Task
-      form(action="/edit/#{task.id}", method="POST")
+      form(action="/crud/editItem/#{task.id}", method="POST")
         div
           label(for="name") Name:
           input(type="text", id="name", name="name", value=task.name, required)

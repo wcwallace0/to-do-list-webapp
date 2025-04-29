@@ -13,8 +13,6 @@ router.get("/add", function(req, res) {
 });
 
 // Renders the edit page
-// TODO (Will) - needs to take in a task object and pass it into the 
-// pug layout so it can fill the fields in
 router.get("/edit", function(req, res) {
     res.render("edit");
 });
@@ -30,21 +28,30 @@ router.get("/entries", async function(req, res) {
 });
 
 // Adds the item in req.body to the database
-router.post("/addItem", function(req, res) {
-    // return res.json(crudModel.addItem({ title: "task2", description: "desc2", priority: "5", deadline: "2/2/2005", status: "complete", username: "user"}));
-    return res.json(crudModel.addItem(req.body));
+router.post("/addItem", async function(req, res) {
+    let decoded = await jwt.decode(req.body.username, secret);
+    let formData = {
+        title: req.body.title,
+        description: req.body.description,
+        priority: req.body.priority,
+        deadline: req.body.deadline,
+        status: req.body.status,
+        username: decoded.username
+    }
+    await crudModel.addItem(formData);
+    res.redirect("/home");
 });
 
 // req.query has an id attribute that is the task_id of the item being removed
 // Removes this item in the database
-router.get("/removeItem", function(req, res) {
-    return res.json(crudModel.removeItem(req.query.id));
+router.get("/removeItem", async function(req, res) {
+    return res.json(await crudModel.removeItem(req.query.task_id));
 });
 
 // Updates the item specified in req.body in the database
-router.post("/editItem", function(req, res) {
+router.post("/editItem", async function(req, res) {
     // return res.json(crudModel.editItem({ title: "task2 new", description: "desc3", priority: "7", deadline: "2/2/2005", status: "in progress", id: 2}));
-    return res.json(req.body);
+    return res.json(await crudModel.editItem(req.body));
 });
 
 module.exports = router;
