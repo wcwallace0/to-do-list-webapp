@@ -7,13 +7,15 @@ router.get("/", function(req, res) {
 });
 
 // Creates the account in req.body in the databse
-router.get("/createAccount", function(req, res) {
-    accountModel.createAccount({ username: "user", password: "testpass" });
+router.post("/createAccount", function(req, res) {
+    // accountModel.createAccount({ username: "user", password: "testpass" });
+    return res.json(accountModel.createAccount(req.body));
 });
 
 // Checks if the username and password in req.body match in the database, returns true/false
-router.get("/authenticate", async function(req, res) {
-    let token = await accountModel.authenticate({ username: "user", password: "badpass" });
+router.post("/authenticate", async function(req, res) {
+    // let token = await accountModel.authenticate({ username: "user", password: "badpass" });
+    let token = await accountModel.authenticate(req.body);
 
     // console.log("moving on " + token);
     if(token.err) {
