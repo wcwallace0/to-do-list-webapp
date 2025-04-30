@@ -12,17 +12,18 @@ html
           input(type="text", id="title", name="title", value=task.title, required)
         div
           label(for="description") Description:
-          textarea(id="description", name="description", required) #{task.description}
+          textarea(id="description", name="description") #{task.description}
         div
           label(for="priority") Priority:
-          input(type="number", id="priority", name="priority", value=task.priority, required)
+          input(type="number", id="priority", name="priority", value=task.priority)
         div
           label(for="deadline") Deadline:
-          input(type="date", id="deadline", name="deadline", value=task.deadline, required)
+          input(type="date", id="deadline", name="deadline", value=task.deadline)
         div
           label(for="status") Status:
-          select(id="status", name="status", required)
-            option(value="Pending", selected=task.status === "Pending") Pending
+          select(id="status", name="status")
+            option(value="N/A", selected=task.status === "N/A") N/A
+            option(value="To-Do", selected=task.status === "To-Do") To-Do
             option(value="In Progress", selected=task.status === "In Progress") In Progress
             option(value="Completed", selected=task.status === "Completed") Completed
         div 

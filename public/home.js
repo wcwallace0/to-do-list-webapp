@@ -52,11 +52,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.createElement('div');
         container.className = 'task';
 
+        const dateOptions = {
+            timeZone: "UTC",
+            dateStyle: "medium"
+        };
+
         const content = `
             <h3>${task.title}</h3>
             <p>Description: ${task.description || 'N/A'}</p>
             <p>Priority: ${task.priority || 'N/A'}</p>
-            <p>Deadline: ${task.deadline || 'N/A'}</p>
+            <p>Deadline: ${new Intl.DateTimeFormat("en-US", dateOptions).format(new Date(task.deadline)) || 'N/A'}</p>
             <p>Status: ${task.status || 'N/A'}</p>
             <button class="edit-button">Edit</button>
             <button class="remove-button">Remove</button>
