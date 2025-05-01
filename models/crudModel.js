@@ -28,8 +28,10 @@ async function getEntries(username) {
     user_name:
 } */
 async function addItem(formData) {
+    let priority = formData.priority ? formData.priority : null;
+
     let sql = 'INSERT INTO Task (title, description, priority, deadline, status, user_name) VALUES ($1, $2, $3, $4, $5, $6)';
-    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.username]);
+    let result = await db.query(sql, [formData.title, formData.description, priority, formData.deadline, formData.status, formData.username]);
     console.log("Add item result ", result);
     return true;
 }
@@ -54,8 +56,10 @@ async function removeItem(task_id) {
     id:
 } */
 async function editItem(formData) {
+    let priority = formData.priority ? formData.priority : null;
+
     let sql = 'UPDATE Task SET title = $1, description = $2, priority = $3, deadline = $4, status = $5 WHERE task_id = $6';
-    let result = await db.query(sql, [formData.title, formData.description, formData.priority, formData.deadline, formData.status, formData.task_id]);
+    let result = await db.query(sql, [formData.title, formData.description, priority, formData.deadline, formData.status, formData.task_id]);
     console.log("Edit item result ", result);
     return true;
 }

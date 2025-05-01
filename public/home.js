@@ -7,6 +7,7 @@
 // public/home.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    const taskTable = document.getElementById('task-table');
     const taskList = document.getElementById('task-list');
     const addButton = document.getElementById('add-button');
     const logoutButton = document.getElementById("logout-button");
@@ -26,9 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(tasks => {
             console.log(tasks);
+
+            // If tasks is empty, don't display the task list table or container
+            if(tasks.length == 0) {
+                taskList.style.display = "none";
+            }
+
             tasks.forEach(task => {
                 const taskElement = createTaskElement(task);
-                taskList.appendChild(taskElement);
+                taskTable.appendChild(taskElement);
             });
         })
         .catch(error => {
@@ -49,17 +56,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper to create task DOM element
     function createTaskElement(task) {
-        const container = document.createElement('div');
+        const container = document.createElement('tr');
         container.className = 'task';
 
+        const dateOptions = {
+            timeZone: "UTC",
+            dateStyle: "medium"
+        };
+        
+        // check if date is overdue
+        const date = new Date(task.deadline);
+        const overdue = (date < new Date()) && task.status != "Completed";
+
         const content = `
-            <h3>${task.title}</h3>
-            <p>Description: ${task.description || 'N/A'}</p>
-            <p>Priority: ${task.priority || 'N/A'}</p>
-            <p>Deadline: ${task.deadline || 'N/A'}</p>
-            <p>Status: ${task.status || 'N/A'}</p>
-            <button class="edit-button">Edit</button>
-            <button class="remove-button">Remove</button>
+            <td>${task.title}</td>
+            <td class="description">${task.description || 'N/A'}</td>
+            <td class="priority">${task.priority || 'N/A'}</td>
+            <td class=${overdue ? "red" : "deadline"}>${task.deadline ? new Intl.DateTimeFormat("en-US", dateOptions).format(date) : 'N/A'}</td>
+            <td>${task.status || 'N/A'}</td>
+            <td>
+                <button class="edit-button">✎</button>
+                <button class="remove-button">✖</button>
+            </td>
         `;
         container.innerHTML = content;
 
