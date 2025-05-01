@@ -16,7 +16,6 @@ async function handleForm(event) {
     if(response.ok) {
         const results = await response.json();
         // save token to localstorage (results.token)
-        console.log("token " + results.token);
         localStorage.setItem("username", results.token);
 
         alert("Successfully logged in");
@@ -24,8 +23,9 @@ async function handleForm(event) {
         // redirect to home page
         window.location.href = "/home"
     } else {
-        console.log(response);
-        alert("Could not log in"); // TODO
+        const results = await response.json();
+        console.log(results);
+        alert("Auth Error: " + results.err);
     }
 }
 

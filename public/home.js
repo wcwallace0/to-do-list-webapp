@@ -8,6 +8,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const taskTable = document.getElementById('task-table');
+    const taskList = document.getElementById('task-list');
     const addButton = document.getElementById('add-button');
     const logoutButton = document.getElementById("logout-button");
     const username = localStorage.getItem('username'); // Assume username stored during login
@@ -26,6 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(tasks => {
             console.log(tasks);
+
+            // If tasks is empty, don't display the task list table or container
+            if(tasks.length == 0) {
+                taskList.style.display = "none";
+            }
+
             tasks.forEach(task => {
                 const taskElement = createTaskElement(task);
                 taskTable.appendChild(taskElement);
@@ -59,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // check if date is overdue
         const date = new Date(task.deadline);
-        const overdue = date < new Date();
+        const overdue = (date < new Date()) && task.status != "Completed";
 
         const content = `
             <td>${task.title}</td>
