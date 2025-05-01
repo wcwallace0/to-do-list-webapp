@@ -8,10 +8,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const taskTable = document.getElementById('task-table');
-    const taskList = document.getElementById('task-list');
     const addButton = document.getElementById('add-button');
     const logoutButton = document.getElementById("logout-button");
     const username = localStorage.getItem('username'); // Assume username stored during login
+    let taskListLength = 0;
 
     if (!username) {
         alert('No user logged in.');
@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(tasks);
 
             // If tasks is empty, don't display the task list table or container
-            if(tasks.length == 0) {
-                taskList.style.display = "none";
+            taskListLength = tasks.length;
+            if(taskListLength == 0) {
+                taskTable.style.display = "none";
             }
 
             tasks.forEach(task => {
@@ -88,6 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(response => {
                         if (response.ok) {
                             container.remove(); // remove from page
+                            taskListLength -= 1;
+                            if(taskListLength == 0) {
+                                taskTable.style.display = "none";
+                            }
                         } else {
                             alert('Failed to remove task.');
                         }

@@ -60,7 +60,7 @@
   .add-task-btn,
   #add-button {
     display: block;
-    margin: 0 auto 60px auto;
+    margin: 0 auto 20px auto;
   }
   
   /* Task List */
@@ -144,6 +144,10 @@
   .create-account-container {
     text-align: center;
     margin-top: 20px;
+  }
+
+  #create-account-label {
+    margin-bottom: 8px;
   }
   
   /* Responsive tweaks */
